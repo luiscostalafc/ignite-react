@@ -3,11 +3,11 @@ import { Header } from "./components/Header";
 import { GlobalStyle } from "./styles/global";
 import { useState } from "react";
 import { NewTransactionModal } from "./components/NewTransactionModal";
-
-
+import { TransactionsProvider } from "./TransactionsContext";
 
 export function App() {
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
+    useState(false);
 
   function handleOpenNewTransactionModalOpen() {
     setIsNewTransactionModalOpen(true);
@@ -17,21 +17,16 @@ export function App() {
     setIsNewTransactionModalOpen(false);
   }
   return (
-    <>
-      <Header
-      onOpenNewTransactionModal={handleOpenNewTransactionModalOpen}
-      />
+    <TransactionsProvider>
+      <Header onOpenNewTransactionModal={handleOpenNewTransactionModalOpen} />
       <Dashboard />
 
       <NewTransactionModal
-      isOpen={isNewTransactionModalOpen}
-      onRequestClose={handleCloseNewTransactionModal}
+        isOpen={isNewTransactionModalOpen}
+        onRequestClose={handleCloseNewTransactionModal}
       />
 
-     
-     <GlobalStyle />
-    </>
+      <GlobalStyle />
+    </TransactionsProvider>
   );
 }
-
-
