@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { Container } from "./styles";
-import { TransactionsContext } from "../../TransactionsContext";
+import { useTransactions } from "../../hooks/useTransactions";
+import { dateConvert, moneyConvert } from "../../utils"
 
 export function TransactionsTable() {
-  const { transactions} = useContext(TransactionsContext);
+  const { transactions} = useTransactions();
   return (
     <Container>
       <table>
@@ -22,14 +23,11 @@ export function TransactionsTable() {
               <tr key={id}>
                 <td>{title}</td>
                 <td className={type}>
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(amount)}
+                  {moneyConvert(amount) }
                 </td>
                 <td>{category}</td>
                 <td>
-                  {new Intl.DateTimeFormat("pt-BR").format(new Date(createdAt))}
+                  {dateConvert(createdAt)}
                 </td>
               </tr>
             )
